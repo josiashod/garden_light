@@ -16,19 +16,22 @@ app.get('/', (req, res) => {
 
 //broadcasting
 let numUsers = 0;
+var theme = "dark";
 
 io.on('connection', (socket) => {
   let addedUser = false;
   
   // when the client emits 'add user', this listens and executes
   socket.on('changeLight', (value) => {
-    socket.emit('arduinoLED', value);
-    socket.broadcast.emit('theme changed', value);
+    theme = value
+    socket.emit('arduinoLED', theme);
+    socket.broadcast.emit('theme changed', theme);
   });
 
   socket.on('add user', (uuid) => {
     // we store the uuid in the socket session for this client
     socket.username = uuid;
+    socket.emit('theme changed', theme)
     ++numUsers;
     addedUser = true;
   });
