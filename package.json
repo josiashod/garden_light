@@ -4,7 +4,7 @@
   "description": "An app that communicate with arduino",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -12,7 +12,6 @@
   "dependencies": {
     "express": "^4.17.1",
     "moment": "^2.29.1",
-    "nodemon": "^3.0.1",
     "socket.io": "^4.0.1"
   },
   "engines": {
