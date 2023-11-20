@@ -31,7 +31,7 @@ io.on('connection', (socket) => {
   socket.on('add user', (uuid) => {
     // we store the uuid in the socket session for this client
     socket.username = uuid;
-    socket.emit('theme changed', theme)
+    io.to(uuid).emit('theme changed', theme)
     ++numUsers;
     addedUser = true;
   });
