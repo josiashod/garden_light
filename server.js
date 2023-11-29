@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 //broadcasting
 let numUsers = 0;
 var theme = "dark";
-var rain = "water_stop"
+var rain = "off";
 
 io.on('connection', (socket) => {
   let addedUser = false;
@@ -53,6 +53,15 @@ io.on('connection', (socket) => {
     //   numUsers: numUsers
     // });
   });
+});
+
+app.get('/output_state', (req, res) => {
+  const states = {
+     "23": (theme == 'dark') ? "0" : "1",
+     "27": (theme == 'dark') ? "0" : "1",
+     "2": (rain == 'off') ? "0" : "1",
+  };
+  res.send(states);
 });
 
 server.listen(port, () => {
