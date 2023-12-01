@@ -67,6 +67,34 @@ $(function() {
     changeWeather(weather)
   });
 
+  setInterval(() => {
+    const apiUrl = window.location.href + "data";
+
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    fetch(apiUrl, requestOptions)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP! Statut: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        document.querySelector('#temp').innerHTML = "Temp: "+ data.temp + "°";
+        document.querySelector('#hum').innerHTML = "Hum: "+ data.hum + "°";
+      })
+      .catch(error => {
+        console.error('Erreur lors de la requête:', error);
+      });
+
+  }, 1000)
+
+
   socket.on('disconnect', () => {
     console.log("You have been disconnected");
   });
@@ -74,8 +102,4 @@ $(function() {
   socket.on('reconnect', () => {
     console.log("You have been reconnected");
   });
-
-  // socket.on('reconnect_error', () => {
-  //   log('attempt to reconnect has failed');
-  // });
 })

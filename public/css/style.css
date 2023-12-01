@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+
 * {
    -webkit-box-sizing: border-box;
    -moz-box-sizing: border-box;
@@ -23,6 +25,14 @@
    transition: .5s;
    overflow: hidden;
  }
+
+ h1
+{
+  font-family: 'Quicksand', sans-serif;
+  font-size: 3.4rem;
+  color: #f7e7eb;
+  text-shadow: 0 0 35px 5px var(--bg-astres),0 0 25px 10px var(--bg-astres);
+}
 
  .cloud {
    -webkit-animation: clouds 60s infinite linear;

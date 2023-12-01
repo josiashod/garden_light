@@ -14,10 +14,12 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-//broadcasting
+// Broadcasting
 let numUsers = 0;
-var theme = "dark";
-var rain = "off";
+let theme = "dark";
+let rain = "off";
+let temp = "0";
+let hum = "0";
 
 io.on('connection', (socket) => {
   let addedUser = false;
@@ -45,7 +47,7 @@ io.on('connection', (socket) => {
     addedUser = true;
   });
 
-  // // when the user disconnects.. perform this
+  // when the user disconnects.. perform this
   socket.on('disconnect', () => {
     // echo globally that this client has left
     // socket.broadcast.emit('user left', {
@@ -53,6 +55,11 @@ io.on('connection', (socket) => {
     //   numUsers: numUsers
     // });
   });
+
+  // setInterval(() => {
+  //   socket.emit('temp', temp);
+  //   socket.emit('hum', hum);
+  // }, "1000"); 
 });
 
 app.get('/output_state', (req, res) => {
@@ -64,6 +71,21 @@ app.get('/output_state', (req, res) => {
   res.send(states);
 });
 
+app.get('/update', (req, res) => {
+  temp = req.query.temp;
+  hum = req.query.hum;
+
+  res.send("data received");
+});
+
+app.get('/data', (req, res) => {
+  const data = {
+    "temp": temp,
+    "hum": hum,
+  };
+  res.send(data);
+});
+
 server.listen(port, () => {
-    console.log('Server listening at port %d', port);
+  console.log('Server listening at port %d', port);
 });
